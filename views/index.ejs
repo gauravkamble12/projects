@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>YouTube Style App</title>
+
+    <!-- ✅ YouTube-like CSS -->
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #0f0f0f;
+            color: #fff;
+        }
+
+        header {
+            padding: 15px 20px;
+            background: #212121;
+            display: flex;
+            justify-content: center;
+        }
+
+        form {
+            display: flex;
+            width: 60%;
+        }
+
+        input {
+            flex: 1;
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            outline: none;
+            border-radius: 2px 0 0 2px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: #cc0000;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 0 2px 2px 0;
+        }
+
+        .grid {
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            cursor: pointer;
+        }
+
+        .card img {
+            width: 100%;
+            border-radius: 10px;
+            transition: transform 0.2s;
+        }
+
+        .card img:hover {
+            transform: scale(1.03);
+        }
+
+        .title {
+            margin-top: 8px;
+            font-size: 14px;
+            line-height: 1.3;
+        }
+
+        /* Video Player Modal */
+        .player {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .player iframe {
+            width: 70%;
+            height: 70%;
+        }
+
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 30px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <form action="/" method="post">
+        <input type="text" name="text" placeholder="Search YouTube" required>
+        <button type="submit">Search</button>
+    </form>
+</header>
+
+<!-- Video Grid -->
+<% if (videos && videos.length > 0) { %>
+    <div class="grid">
+        <% videos.forEach(video => { %>
+            <div class="card" onclick="playVideo('<%= video.id %>')">
+                <img src="<%= video.thumbnail %>" alt="">
+                <div class="title"><%= video.title %></div>
+            </div>
+        <% }) %>
+    </div>
+<% } %>
+
+<!-- Player -->
+<div class="player" id="player">
+    <span class="close" onclick="closePlayer()">✖</span>
+    <iframe id="iframe" frameborder="0" allowfullscreen></iframe>
+</div>
+
+<!-- ✅ JavaScript -->
+<script>
+    function playVideo(id) {
+        const player = document.getElementById('player');
+        const iframe = document.getElementById('iframe');
+
+        iframe.src = `https://www.youtube.com/embed/${id}?autoplay=1`;
+        player.style.display = 'flex';
+    }
+
+    function closePlayer() {
+        const player = document.getElementById('player');
+        const iframe = document.getElementById('iframe');
+
+        iframe.src = '';
+        player.style.display = 'none';
+    }
+</script>
+
+</body>
+</html>
