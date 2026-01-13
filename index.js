@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY;
 
 app.get('/', (req, res) => {
-    res.render('index', { videos: [] });   // 👈 IMPORTANT
+    res.render('index', { videos: [] }); 
 });
 
 app.post('/', async (req, res) => {
@@ -50,3 +50,4 @@ app.post('/', async (req, res) => {
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
 });
+
